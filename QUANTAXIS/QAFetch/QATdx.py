@@ -705,9 +705,8 @@ def QA_fetch_get_stock_list(type_='stock', ip=None, port=None):
         data = pd.concat(
             [pd.concat([api.to_df(api.get_security_list(j, i * 1000)).assign(
                 sse='sz' if j == 0 else 'sh') for i in
-                range(int(api.get_security_count(j) / 1000) + 1)], axis=0, sort=False) for
-                j
-                in range(2)], axis=0, sort=False)
+                range(int(api.get_security_count(j) / 1000) + 1)], axis=0, sort=False) for j in 
+                range(2)], axis=0, sort=False)
         # data.code = data.code.apply(int)
 
         data = data.loc[:,['code','volunit','decimal_point','name','pre_close','sse']].set_index(
@@ -717,25 +716,38 @@ def QA_fetch_get_stock_list(type_='stock', ip=None, port=None):
 
         sz = sz.assign(sec=sz.code.apply(for_sz))
         sh = sh.assign(sec=sh.code.apply(for_sh))
-
+#        print("sz===================",sz)
+#        print("sh--------------------",sh)
+##W        me=pd.merge(sz,sh,left_index=True, right_index=True, how='outer')
+##W        print(me)
         if type_ in ['stock', 'gp']:
             # res = pd.read_csv('http://data.yutiansut.com/stock_code.csv')
             # return res.assign(code=res.code.apply(lambda x: QA_util_code_tostr(x)))
-            return pd.concat([sz, sh], sort=False).query(
-                'sec=="stock_cn"').sort_index().assign(
-                name=data['name'].apply(lambda x: str(x)[0:6]))
+            return pd.concat([sz, sh],sort=False).query(
+                'sec=="stock_cn"').sort_index()##W.assign(
+##W                name=data['name'].apply(lambda x: str(x)[0:6]))
+                
+            # szsh = pd.concat([sz, sh],sort=False).query( 
+            #     'sec=="stock_cn"')
+            # print(szsh)
+            # szshname = szsh.sort_index()#.assign( name=data['name'].apply(lambda x: str(x)[0:6]))
+            # print(szshname)
+            # return szshname
+##W            # return pd.merge(sz,sh,left_index=True, right_index=True, how='outer').query(
+##W                # 'sec_x=="stock_cn"').sort_index().assign(
+##W                # name=data['name'].apply(lambda x: str(x)[0:6]))
 
         elif type_ in ['index', 'zs']:
 
             return pd.concat([sz, sh], sort=False).query(
-                'sec=="index_cn"').sort_index().assign(
-                name=data['name'].apply(lambda x: str(x)[0:6]))
+                'sec=="index_cn"').sort_index()##W.assign(
+                ##Wname=data['name'].apply(lambda x: str(x)[0:6]))
             # .assign(szm=data['name'].apply(lambda x: ''.join([y[0] for y in lazy_pinyin(x)])))\
             # .assign(quanpin=data['name'].apply(lambda x: ''.join(lazy_pinyin(x))))
         elif type_ in ['etf', 'ETF']:
             return pd.concat([sz, sh], sort=False).query(
-                'sec=="etf_cn"').sort_index().assign(
-                name=data['name'].apply(lambda x: str(x)[0:6]))
+                'sec=="etf_cn"').sort_index()##W.assign(
+               ##W name=data['name'].apply(lambda x: str(x)[0:6]))
 
         else:
             return data.assign(
@@ -772,8 +784,8 @@ def QA_fetch_get_index_list(ip=None, port=None):
         sz = sz.assign(sec=sz.code.apply(for_sz))
         sh = sh.assign(sec=sh.code.apply(for_sh))
         return pd.concat([sz, sh], sort=False).query(
-            'sec=="index_cn"').sort_index().assign(
-            name=data['name'].apply(lambda x: str(x)[0:6]))
+            'sec=="index_cn"').sort_index()##W.assign(
+           ##W name=data['name'].apply(lambda x: str(x)[0:6]))
 
 
 @retry(stop_max_attempt_number=3, wait_random_min=50, wait_random_max=100)
@@ -799,8 +811,8 @@ def QA_fetch_get_bond_list(ip=None, port=None):
         sh = data.query('sse=="sh"')
         sz = sz.assign(sec=sz.code.apply(for_sz))
         sh = sh.assign(sec=sh.code.apply(for_sh))
-        return pd.concat([sz, sh], sort=False).query('sec=="bond_cn"').sort_index().assign(
-            name=data['name'].apply(lambda x: str(x)[0:6]))
+        return pd.concat([sz, sh], sort=False).query('sec=="bond_cn"').sort_index()##W.assign(
+            ##Wname=data['name'].apply(lambda x: str(x)[0:6]))
 
 @retry(stop_max_attempt_number=3, wait_random_min=50, wait_random_max=100)
 def QA_fetch_get_bond_day(code, start_date, end_date, frequence='day', ip=None,
@@ -1366,6 +1378,19 @@ def QA_fetch_get_tdx_industry() -> pd.DataFrame:
         hy = folder + '/tdxhy.cfg' # tdx stock file
 
         # tdx industry file
+
+        if not os.path.exists(incon):
+            src = "/home/wangdong/Downloads/QUANTAXIS/incon.dat"
+            dst =folder + '/'
+#            print(incon)
+#            print(src)
+#            print(dst)
+            try:
+                shutil.copy(src,dst) ##W
+                print("incon.dat copied successfully.")
+#                print(os.listdir(dst)) 
+            except Exception as e:
+                print(e)
         with open(incon, encoding='GB18030', mode='r') as f:
             incon = f.readlines()
         incon_dict = {}
@@ -1398,11 +1423,13 @@ def QA_fetch_get_tdx_industry() -> pd.DataFrame:
         df.rename({0: 'sse', 1: 'code', 2: 'TDX_code', 3: 'SW_code'}, axis=1, inplace=True)
         df = df[[i for i in df.columns if not isinstance(i, int) and  '_type' not in str(i)]]
         df.columns = [i.lower() for i in df.columns]
+#        print(df)
 
         shutil.rmtree(folder, ignore_errors=True)
         return df
 
     folder = download_tdx_file()
+##W    print(folder) ##W
     df = read_industry(folder)
     return df
 
