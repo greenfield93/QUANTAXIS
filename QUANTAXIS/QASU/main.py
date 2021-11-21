@@ -350,7 +350,19 @@ def QA_SU_save_stock_min(engine, client=DATABASE):
     engine = select_save_engine(engine)
     engine.QA_SU_save_stock_min(client=client)
 
+def QA_SU_save_stock_min_jqdata(engine, client=DATABASE):##W
+    """save stock_min jqdata
 
+    Arguments:
+        engine {[type]} -- [description]
+
+    Keyword Arguments:
+        client {[type]} -- [description] (default: {DATABASE})
+    """
+
+    engine = select_save_engine(engine)
+    engine.QA_SU_save_stock_min_jqdata(client=client)
+    
 def QA_SU_save_stock_transaction(engine, client=DATABASE):
     """save stock_transaction
 
@@ -381,7 +393,7 @@ def QA_SU_save_index_transaction(engine, client=DATABASE):
 
 
 def QA_SU_save_single_stock_min(code, engine, client=DATABASE):
-    """save stock_min
+    """save stock_min single
 
     Arguments:
         engine {[type]} -- [description]

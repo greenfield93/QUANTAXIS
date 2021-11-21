@@ -1380,7 +1380,7 @@ def QA_fetch_get_tdx_industry() -> pd.DataFrame:
         # tdx industry file
 
         if not os.path.exists(incon):
-            src = "/home/wangdong/Downloads/QUANTAXIS/incon.dat"
+            src = "D:\代码存放\QUANTAXIS\incon.dat"
             dst =folder + '/'
 #            print(incon)
 #            print(src)

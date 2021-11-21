@@ -764,10 +764,10 @@ def QA_SU_save_stock_min(client=DATABASE, ui_log=None, ui_progress=None):
                     QA_util_log_info(
                         '##JOB03.{} Now Saving {} from {} to {} =={} '.format(
                             ['1min',
-                             '5min',
-                             '15min',
-                             '30min',
-                             '60min'].index(type),
+                            '5min',
+                            '15min',
+                            '30min',
+                            '60min'].index(type),
                             str(code),
                             start_time,
                             end_time,

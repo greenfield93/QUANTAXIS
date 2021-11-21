@@ -60,14 +60,14 @@ except:
     )
 
 logging.basicConfig(
-    level=logging.DEBUG,##W
+    level=logging.WARNING,##W
     format='%(asctime)s QUANTAXIS>>> %(message)s',
     datefmt='%H:%M:%S',
     filename=_name,
     filemode='w',
 )
 console = logging.StreamHandler()
-console.setLevel(logging.DEBUG)##W
+console.setLevel(logging.WARNING)##W
 logging.getLogger('matplotlib').setLevel(logging.WARNING)##W
 import logging##W
 logging.getLogger('asyncio').setLevel(logging.WARNING)##W

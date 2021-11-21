@@ -43,55 +43,56 @@ from QUANTAXIS import __version__
 #                                          QA_ts_update_stock_basic)
 # 东方财富爬虫
 from QUANTAXIS.QASU.main import (QA_SU_crawl_eastmoney, QA_SU_save_bond_day,
-                                 QA_SU_save_bond_list, QA_SU_save_bond_min,
-                                 QA_SU_save_etf_day, QA_SU_save_etf_list,
-                                 QA_SU_save_etf_min, QA_SU_save_financialfiles,
-                                 QA_SU_save_future_day,
-                                 QA_SU_save_future_day_all,
-                                 QA_SU_save_future_list, QA_SU_save_future_min,
-                                 QA_SU_save_future_min_all,
-                                 QA_SU_save_index_day, QA_SU_save_index_list,
-                                 QA_SU_save_index_min,
-                                 QA_SU_save_index_transaction,
-                                 QA_SU_save_option_50etf_day,
-                                 QA_SU_save_option_50etf_min,
-                                 QA_SU_save_option_300etf_day,
-                                 QA_SU_save_option_300etf_min,
-                                 QA_SU_save_option_commodity_day,
-                                 QA_SU_save_option_commodity_min,
-                                 QA_SU_save_option_contract_list,
-                                 QA_SU_save_option_day_all,
-                                 QA_SU_save_option_min_all,
-                                 QA_SU_save_report_calendar_day,
-                                 QA_SU_save_report_calendar_his,
-                                 QA_SU_save_single_bond_day,
-                                 QA_SU_save_single_bond_min,
-                                 QA_SU_save_single_etf_day,
-                                 QA_SU_save_single_etf_min,
-                                 QA_SU_save_single_future_day,
-                                 QA_SU_save_single_future_min,
-                                 QA_SU_save_single_index_day,
-                                 QA_SU_save_single_index_min,
-                                 QA_SU_save_single_stock_day,
-                                 QA_SU_save_single_stock_min,
-                                 QA_SU_save_stock_block, QA_SU_save_stock_day,
-                                 QA_SU_save_stock_divyield_day,
-                                 QA_SU_save_stock_divyield_his,
-                                 QA_SU_save_stock_info,
-                                 QA_SU_save_stock_info_tushare,
-                                 QA_SU_save_stock_list, QA_SU_save_stock_min,
-                                 QA_SU_save_stock_transaction,
-                                 QA_SU_save_stock_xdxr)
+                                QA_SU_save_bond_list, QA_SU_save_bond_min,
+                                QA_SU_save_etf_day, QA_SU_save_etf_list,
+                                QA_SU_save_etf_min, QA_SU_save_financialfiles,
+                                QA_SU_save_future_day,
+                                QA_SU_save_future_day_all,
+                                QA_SU_save_future_list, QA_SU_save_future_min,
+                                QA_SU_save_future_min_all,
+                                QA_SU_save_index_day, QA_SU_save_index_list,
+                                QA_SU_save_index_min,
+                                QA_SU_save_index_transaction,
+                                QA_SU_save_option_50etf_day,
+                                QA_SU_save_option_50etf_min,
+                                QA_SU_save_option_300etf_day,
+                                QA_SU_save_option_300etf_min,
+                                QA_SU_save_option_commodity_day,
+                                QA_SU_save_option_commodity_min,
+                                QA_SU_save_option_contract_list,
+                                QA_SU_save_option_day_all,
+                                QA_SU_save_option_min_all,
+                                QA_SU_save_report_calendar_day,
+                                QA_SU_save_report_calendar_his,
+                                QA_SU_save_single_bond_day,
+                                QA_SU_save_single_bond_min,
+                                QA_SU_save_single_etf_day,
+                                QA_SU_save_single_etf_min,
+                                QA_SU_save_single_future_day,
+                                QA_SU_save_single_future_min,
+                                QA_SU_save_single_index_day,
+                                QA_SU_save_single_index_min,
+                                QA_SU_save_single_stock_day,
+                                QA_SU_save_single_stock_min,
+                                QA_SU_save_stock_block, QA_SU_save_stock_day,
+                                QA_SU_save_stock_divyield_day,
+                                QA_SU_save_stock_divyield_his,
+                                QA_SU_save_stock_info,
+                                QA_SU_save_stock_info_tushare,
+                                QA_SU_save_stock_list, QA_SU_save_stock_min,
+                                QA_SU_save_stock_min_jqdata,##W
+                                QA_SU_save_stock_transaction,
+                                QA_SU_save_stock_xdxr)
 from QUANTAXIS.QASU.save_binance import (QA_SU_save_binance,
-                                         QA_SU_save_binance_1day,
-                                         QA_SU_save_binance_1hour,
-                                         QA_SU_save_binance_1min,
-                                         QA_SU_save_binance_symbol)
+                                        QA_SU_save_binance_1day,
+                                        QA_SU_save_binance_1hour,
+                                        QA_SU_save_binance_1min,
+                                        QA_SU_save_binance_symbol)
 from QUANTAXIS.QASU.save_bitfinex import (QA_SU_save_bitfinex,
-                                          QA_SU_save_bitfinex_1day,
-                                          QA_SU_save_bitfinex_1hour,
-                                          QA_SU_save_bitfinex_1min,
-                                          QA_SU_save_bitfinex_symbol)
+                                        QA_SU_save_bitfinex_1day,
+                                        QA_SU_save_bitfinex_1hour,
+                                        QA_SU_save_bitfinex_1min,
+                                        QA_SU_save_bitfinex_symbol)
 from QUANTAXIS.QASU.save_bitmex import (QA_SU_save_bitmex,
                                         QA_SU_save_bitmex_symbol)
 from QUANTAXIS.QASU.save_huobi import (QA_SU_save_huobi, QA_SU_save_huobi_1day,
@@ -105,6 +106,7 @@ from QUANTAXIS.QASU.save_okex import (QA_SU_save_okex, QA_SU_save_okex_1day,
                                       QA_SU_save_okex_symbol)
 from QUANTAXIS.QAUtil import (QA_Setting, QA_util_log_info,
                               QA_util_mongo_initial)
+##W from QUANTAXIS.QASU.save_jq import (QA_SU_save_stock_min_jqdata)##W
 
 
 class CLI(cmd.Cmd):
@@ -297,6 +299,7 @@ class CLI(cmd.Cmd):
             命令格式：save stock_day  : 保存日线数据 \n\
             命令格式：save single_stock_day  : 保存单个股票日线数据 \n\
             命令格式：save stock_min  : 保存分钟线数据 \n\
+            命令格式：save stock_min_jqdata  : 聚宽保存分钟线数据 \n\
             命令格式：save single_stock_min  : 保存单个股票分钟线数据 \n\
             命令格式：save index_day  : 保存指数日线数据 \n\
             命令格式：save single_index_day  : 保存单个指数日线数据 \n\
@@ -436,6 +439,18 @@ class CLI(cmd.Cmd):
                 QA_SU_save_stock_list("tdx")
                 QA_SU_save_index_list("tdx")
                 # QA_SU_save_stock_block('tdx')
+            elif len(arg) == 1 and arg[0] == "stock_min_jqdata":##W
+                if (
+                    QA_Setting()
+                    .client.quantaxis.user_list.find({"username": "admin"})
+                    .count()
+                    == 0
+                ):
+                    QA_Setting().client.quantaxis.user_list.insert(
+                        {"username": "admin", "password": "admin"}
+                    )
+                QA_SU_save_stock_min_jqdata("jq") ##W
+
             elif len(arg) == 1 and arg[0] == "transaction":
                 if (
                     QA_Setting()
