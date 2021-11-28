@@ -40,7 +40,7 @@ def QA_SU_save_stock_min_jqdata(client=DATABASE, ui_log=None, ui_progress=None):
     try:
         import jqdatasdk
         # 请自行将 JQUSERNAME 和 JQUSERPASSWD 修改为自己的账号密码
-        jqdatasdk.auth("13801259531", "259531")##W
+        jqdatasdk.auth("1380125XXXX", "XXXXXX")##W
         print(jqdatasdk.get_query_count())
     except:
         raise ModuleNotFoundError

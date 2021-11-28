@@ -182,3 +182,5 @@ celerybeat*
 /QUANTAXIS/QAAnalysis/QABeyond.py
 /QUANTAXIS/QAAnalysis/QAAnalysis_kline.py
 /QUANTAXIS/.gitignore
+
+pytdx/
