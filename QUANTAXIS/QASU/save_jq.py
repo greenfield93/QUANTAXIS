@@ -9,9 +9,9 @@ import pymongo
 import QUANTAXIS as QA
 from QUANTAXIS.QAFetch.QATdx import QA_fetch_get_stock_list
 from QUANTAXIS.QAUtil import (DATABASE, QA_util_date_stamp,
-                              QA_util_get_real_date, QA_util_log_info,
-                              QA_util_time_stamp, QA_util_to_json_from_pandas,
-                              trade_date_sse)
+                            QA_util_get_real_date, QA_util_log_info,
+                            QA_util_time_stamp, QA_util_to_json_from_pandas,
+                            trade_date_sse)
 
 TRADE_HOUR_END = 17
 
@@ -40,7 +40,7 @@ def QA_SU_save_stock_min_jqdata(client=DATABASE, ui_log=None, ui_progress=None):
     try:
         import jqdatasdk
         # 请自行将 JQUSERNAME 和 JQUSERPASSWD 修改为自己的账号密码
-        jqdatasdk.auth("1380125XXXX", "XXXXXX")##W
+        jqdatasdk.auth("13801259531", "259531")##W
         print(jqdatasdk.get_query_count())
     except:
         raise ModuleNotFoundError
@@ -51,36 +51,36 @@ def QA_SU_save_stock_min_jqdata(client=DATABASE, ui_log=None, ui_progress=None):
             lambda x: x + ".XSHG" if x[0] == "6" else x + ".XSHE",
             QA_fetch_get_stock_list().code.unique().tolist(),
         ))
-    coll = client.stock_min
+    coll = client.stock_min_jqdata
     coll.create_index([
         ("code", pymongo.ASCENDING),
         ("time_stamp", pymongo.ASCENDING),
         ("date_stamp", pymongo.ASCENDING),
     ])
     err = []
-   
+
     def __transform_jq_to_qa(df, code, type_):
         """
         处理 jqdata 分钟数据为 qa 格式，并存入数据库
         1. jdatasdk 数据格式:
-                          open  close   high    low     volume       money
+                        open  close   high    low     volume       money
         2018-12-03 09:31:00  10.59  10.61  10.61  10.59  8339100.0  88377836.0
         2. 与 QUANTAXIS.QAFetch.QATdx.QA_fetch_get_stock_min 获取数据进行匹配，具体处理详见相应源码
 
-                          open  close   high    low           vol        amount    ...
+                        open  close   high    low           vol        amount    ...
         datetime
         2018-12-03 09:31:00  10.99  10.90  10.99  10.90  2.211700e+06  2.425626e+07 ...
         """
 
         if df is None or len(df) == 0:
             raise ValueError("没有聚宽数据")
-
+##W        print("df2 type=",type(df))
         df = df.reset_index().rename(columns={
             "index": "datetime",
             "volume": "vol",
             "money": "amount"
         })
-
+ 
         df["code"] = code
         df["date"] = df.datetime.map(str).str.slice(0, 10)
         df = df.set_index("datetime", drop=False)
@@ -130,20 +130,28 @@ def QA_SU_save_stock_min_jqdata(client=DATABASE, ui_log=None, ui_progress=None):
                         ui_log=ui_log,
                     )
                     if start_time != end_time:
-                        df = jqdatasdk.get_price(
+                        try:
+
+                            df = jqdatasdk.get_price(
                             security=code,
                             start_date=start_time,
                             end_date=end_time,
                             frequency=type_.split("min")[0]+"m",
-                        )
-                        
-                        QA_util_log_info("jqdatasdk.get_price{}".format(df),ui_log=ui_log) ##W
-                        __data = __transform_jq_to_qa(
+                            panel=False
+                            )
+##W                            print("df1 type=",type(df))
+##W                        QA_util_log_info("jqdatasdk.get_price{}".format(df),ui_log=ui_log) ##W
+                            __data = __transform_jq_to_qa(
                             df, code=code[:6], type_=type_)
-                        QA_util_log_info("__transform_jq_to_qa{}".format(__data),ui_log=ui_log) ##W
-                        if len(__data) > 1:
-                            coll.insert_many(
-                                QA_util_to_json_from_pandas(__data)[1::])
+##W                        QA_util_log_info("__transform_jq_to_qa{}".format(__data),ui_log=ui_log) ##W
+                            if len(__data) > 1:
+                                coll.insert_many(
+##W                                QA_util_to_json_from_pandas(__data)[1::])
+                                QA_util_to_json_from_pandas(__data))
+                        except Exception as e:
+                            print(e)
+        
+
                 else:
                     start_time = "2015-01-01 09:30:00"
                     QA_util_log_info(
@@ -167,14 +175,17 @@ def QA_SU_save_stock_min_jqdata(client=DATABASE, ui_log=None, ui_progress=None):
                                             start_date=start_time,
                                             end_date=end_time,
                                             frequency=type_.split("min")[0]+"m",
-                                        ),
-                            QA_util_log_info("jqdatasdk.get_price{}".format(df),ui_log=ui_log) ##W
+                                            panel=False
+                                        )
+##W                            print("df1 type=",type(df))
+##W                            QA_util_log_info("jqdatasdk.get_price{}".format(df),ui_log=ui_log) ##W
                             __data = __transform_jq_to_qa(
                             df, code=code[:6], type_=type_)
-                            QA_util_log_info("__transform_jq_to_qa{}".format(__data),ui_log=ui_log) ##W
+##W                            QA_util_log_info("__transform_jq_to_qa{}".format(__data),ui_log=ui_log) ##W
                             if len(__data) > 1:
                                 coll.insert_many(
-                                    QA_util_to_json_from_pandas(__data)[1::])
+##W                                    QA_util_to_json_from_pandas(__data)[1::])
+                                QA_util_to_json_from_pandas(__data))
                         except Exception as e:
                             print(e)
         except Exception as e:
@@ -183,12 +194,14 @@ def QA_SU_save_stock_min_jqdata(client=DATABASE, ui_log=None, ui_progress=None):
             QA_util_log_info(err, ui_log=ui_log)
 
     # 聚宽之多允许三个线程连接
-    executor = ThreadPoolExecutor(max_workers=5)
+    executor = ThreadPoolExecutor(max_workers=3)
     res = {
-        executor.submit(__saving_work, code_list[0:1], coll)
-##W        executor.submit(__saving_work, code_list[i_], coll)
-##W        for i_ in range(len(code_list))
+##W        executor.submit(__saving_work, code_list[0], coll)
+        executor.submit(__saving_work, code_list[i_], coll)
+        for i_ in range(len(code_list))
     }
+##W    print("code_list type=",type(code_list))
+
     count = 0
     for i_ in concurrent.futures.as_completed(res):
         QA_util_log_info(
@@ -217,5 +230,6 @@ def QA_SU_save_stock_min_jqdata(client=DATABASE, ui_log=None, ui_progress=None):
 
 if __name__ == "__main__":
     import logging
-    logging.getLogger('jqdatasdk').setLevel(logging.DEBUG)
+    logging.getLogger('jqdatasdk').setLevel(logging.WARNING)
+    logging.getLogger('urllib3').setLevel(logging.WARNING)
     QA_SU_save_stock_min_jqdata()
